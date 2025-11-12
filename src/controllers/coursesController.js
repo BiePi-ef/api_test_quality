@@ -4,6 +4,8 @@ const storage = require("../services/storage");
  * @swagger
  * /courses:
  *   get:
+ *     tags:
+ *       - Courses
  *     summary: Liste des cours
  *     responses:
  *       200:
@@ -23,6 +25,8 @@ exports.listCourses = (req, res) => {
  * @swagger
  * /courses/{id}:
  *   get:
+ *     tags:
+ *       - Courses
  *     summary: Récupérer un cours
  *     parameters:
  *       - name: id
@@ -47,6 +51,8 @@ exports.getCourse = (req, res) => {
  * @swagger
  * /courses:
  *   post:
+ *     tags:
+ *       - Courses
  *     summary: Créer un cours
  *     requestBody:
  *       required: true
@@ -80,6 +86,8 @@ exports.createCourse = (req, res) => {
  * @swagger
  * /courses/{id}:
  *   delete:
+ *     tags:
+ *       - Courses
  *     summary: Supprimer un cours
  *     parameters:
  *       - name: id
@@ -101,6 +109,41 @@ exports.deleteCourse = (req, res) => {
   return res.status(204).send();
 };
 
+/**
+ * @swagger
+ * /courses/{id}:
+ *   put:
+ *     tags:
+ *       - Courses
+ *     summary: Update an existing course
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               teacher:
+ *                 type: string
+ *             required:
+ *               - title
+ *               - teacher
+ *     responses:
+ *       200:
+ *         description: OK
+ *       400:
+ *         description: Course title must be unique
+ *       404:
+ *         description: Course not found
+ */
 exports.updateCourse = (req, res) => {
   const course = storage.get("courses", req.params.id);
   if (!course) return res.status(404).json({ error: "Course not found" });
