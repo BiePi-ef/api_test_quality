@@ -53,3 +53,19 @@ npm run dev
 ---
 
 **À vous de jouer pour améliorer la qualité et la fiabilité du projet !**
+
+## Done :
+- Corriger et compléter les tests existants. -> done
+- Ajouter de nouveaux tests pour améliorer la couverture -> 90% coverage
+- Intégrer la vérification de qualité et les tests dans la CI.
+- Finaliser la documentation Swagger.
+
+- Mettre en place ESLint et Prettier
+- Intégrer Codacy comme outil d’analyse statique
+- Ajouter un template de Pull Request (.github/pull_request_template.md).
+- Produire une Pull Request bien documentée avec des messages de commits pertinents.
+- Rédiger une documentation technique complète (Markdown ou générateur).
+- Fournir un dépôt Git propre, lisible et bien organisé.
+
+tdo :
+- prettier

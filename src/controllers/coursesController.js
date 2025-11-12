@@ -1,19 +1,21 @@
-const storage = require('../services/storage');
+const storage = require("../services/storage");
 
 /**
  * @swagger
  * /courses:
  *   get:
+ *     tags:
+ *       - Courses
  *     summary: Liste des cours
  *     responses:
  *       200:
  *         description: OK
  */
 exports.listCourses = (req, res) => {
-  let courses = storage.list('courses');
+  let courses = storage.list("courses");
   const { title, teacher, page = 1, limit = 10 } = req.query;
-  if (title) courses = courses.filter(c => c.title.includes(title));
-  if (teacher) courses = courses.filter(c => c.teacher.includes(teacher));
+  if (title) courses = courses.filter((c) => c.title.includes(title));
+  if (teacher) courses = courses.filter((c) => c.teacher.includes(teacher));
   const start = (page - 1) * limit;
   const paginated = courses.slice(start, start + Number(limit));
   res.json({ courses: paginated, total: courses.length });
@@ -23,6 +25,8 @@ exports.listCourses = (req, res) => {
  * @swagger
  * /courses/{id}:
  *   get:
+ *     tags:
+ *       - Courses
  *     summary: Récupérer un cours
  *     parameters:
  *       - name: id
@@ -37,8 +41,8 @@ exports.listCourses = (req, res) => {
  *         description: Non trouvé
  */
 exports.getCourse = (req, res) => {
-  const course = storage.get('courses', req.params.id);
-  if (!course) return res.status(404).json({ error: 'Course not found' });
+  const course = storage.get("courses", req.params.id);
+  if (!course) return res.status(404).json({ error: "Course not found" });
   const students = storage.getCourseStudents(req.params.id);
   return res.json({ course, students });
 };
@@ -47,6 +51,8 @@ exports.getCourse = (req, res) => {
  * @swagger
  * /courses:
  *   post:
+ *     tags:
+ *       - Courses
  *     summary: Créer un cours
  *     requestBody:
  *       required: true
@@ -70,8 +76,9 @@ exports.getCourse = (req, res) => {
  */
 exports.createCourse = (req, res) => {
   const { title, teacher } = req.body;
-  if (!title || !teacher) return res.status(400).json({ error: 'title and teacher required' });
-  const created = storage.create('courses', { title, teacher });
+  if (!title || !teacher)
+    return res.status(400).json({ error: "title and teacher required" });
+  const created = storage.create("courses", { title, teacher });
   return res.status(201).json(created);
 };
 
@@ -79,6 +86,8 @@ exports.createCourse = (req, res) => {
  * @swagger
  * /courses/{id}:
  *   delete:
+ *     tags:
+ *       - Courses
  *     summary: Supprimer un cours
  *     parameters:
  *       - name: id
@@ -93,18 +102,57 @@ exports.createCourse = (req, res) => {
  *         description: Non trouvé
  */
 exports.deleteCourse = (req, res) => {
-  const result = storage.remove('courses', req.params.id);
-  if (result === false) return res.status(404).json({ error: 'Course not found' });
+  const result = storage.remove("courses", req.params.id);
+  if (result === false)
+    return res.status(404).json({ error: "Course not found" });
   if (result.error) return res.status(400).json({ error: result.error });
   return res.status(204).send();
 };
 
+/**
+ * @swagger
+ * /courses/{id}:
+ *   put:
+ *     tags:
+ *       - Courses
+ *     summary: Update an existing course
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               teacher:
+ *                 type: string
+ *             required:
+ *               - title
+ *               - teacher
+ *     responses:
+ *       200:
+ *         description: OK
+ *       400:
+ *         description: Course title must be unique
+ *       404:
+ *         description: Course not found
+ */
 exports.updateCourse = (req, res) => {
-  const course = storage.get('courses', req.params.id);
-  if (!course) return res.status(404).json({ error: 'Course not found' });
+  const course = storage.get("courses", req.params.id);
+  if (!course) return res.status(404).json({ error: "Course not found" });
   const { title, teacher } = req.body;
-  if (title && storage.list('courses').find(c => c.title === title && c.id !== course.id)) {
-    return res.status(400).json({ error: 'Course title must be unique' });
+  if (
+    title &&
+    storage.list("courses").find((c) => c.title === title && c.id !== course.id)
+  ) {
+    return res.status(400).json({ error: "Course title must be unique" });
   }
   if (title) course.title = title;
   if (teacher) course.teacher = teacher;
