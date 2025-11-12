@@ -1,19 +1,21 @@
 
-\[type\]:\[message\]
+# \[type]: [message]
 
-Contexte :
+## Contexte :
 - Issue liée: #<numéro> (si applicable)
 - Si pas d'issue lié, explication
 
-Relecteurs suggérés :
+## Details :
+- optional details
+
+## Relecteurs suggérés :
 - @nom1
 - @nom2
 
-_
-## Type de changement :
-- Bugfix
-- Feature
-- Refactor
-- Tests / QA
-- Doc
-_
+### Type de changement :
+- BUGFIX
+- FEATURE
+- REFACTOR
+- TEST
+- QA
+- DOC
