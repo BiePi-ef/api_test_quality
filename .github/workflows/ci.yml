@@ -1,35 +1,34 @@
-name: Tests CI
+name: CI
 
 on:
   push:
-    branches:
-      - master
-      - main
+    branches: [main, master, test]
   pull_request:
-    branches:
-      - master
-      - main
+    branches: [main, master, test]
 
 jobs:
-  test:
+  build:
+    name: Build & Test
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 23.10.0
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: 23
+          cache: "npm"
+
       - name: Install dependencies
-        run: npm install
-  
-  build:
-    steps:
+        run: npm ci
+
       - name: Lint
         run: npm run lint
 
       - name: Format check
-        run: npm run format -- --check
+        run: npx prettier --check .
 
       - name: Run tests (with coverage)
         env:
