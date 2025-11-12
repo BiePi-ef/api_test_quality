@@ -53,3 +53,11 @@ npm run dev
 ---
 
 **À vous de jouer pour améliorer la qualité et la fiabilité du projet !**
+
+## Done :
+- tests to get 90 coverage on whole codebase
+- swagger on all routes
+- basic git ci.yml implemented for branch called 'main'
+
+tdo :
+- prettier
