@@ -56,8 +56,8 @@ npm run dev
 
 ## Done :
 
-- Corriger et compléter les tests existants. -> done
-- Ajouter de nouveaux tests pour améliorer la couverture -> 90% coverage
+- Corriger et compléter les tests existants.
+- Ajouter de nouveaux tests pour améliorer la couverture
 - Intégrer la vérification de qualité et les tests dans la CI.
 - Finaliser la documentation Swagger.
 - Ajouter un template de Pull Request (.github/pull_request_template.md).
