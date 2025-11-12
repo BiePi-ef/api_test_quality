@@ -22,3 +22,16 @@ jobs:
           node-version: "18"
       - name: Install dependencies
         run: npm install
+  
+  build:
+    steps:
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npm run format -- --check
+
+      - name: Run tests (with coverage)
+        env:
+          CI: true
+        run: npm test -- --coverage
