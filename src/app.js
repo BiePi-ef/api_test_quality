@@ -11,7 +11,10 @@ const swaggerDefinition = require("../swaggerDef");
 
 const options = {
   swaggerDefinition,
-  apis: ["./src/controllers/*.js"], // Chemin vers les fichiers avec les commentaires JSDoc
+  apis: [
+    "./src/controllers/*.js",
+    "./src/routes/*.js"
+  ], // Chemin vers les fichiers avec les commentaires JSDoc
 };
 
 const swaggerSpec = swaggerJSDoc(options);
