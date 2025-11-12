@@ -56,3 +56,16 @@ test("shouldn't allow more than 3 students in a course", () => {
   const result = storage.enroll(4, course.id);
   expect(result.error).toBe("Course is full");
 });
+
+test("shouldn return all courses of a student", () => {
+  const student = storage.list("students")[0];
+  const result = storage.getStudentCourses(student.id);
+
+  expect(result).toStrictEqual([
+    {
+      id: 1,
+      teacher: "Mr. Smith",
+      title: "Math",
+    },
+  ]);
+});

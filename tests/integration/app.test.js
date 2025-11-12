@@ -99,22 +99,22 @@ describe("Student-Course API integration", () => {
   });
 
   test("POST /:courseId/students/:studentId should add a student to a course", async () => {
-    
     const res = await request(app).post("/courses/1/students/1");
     const courses = await request(app).get("/courses/1");
-    
+
     expect(res.statusCode).toBe(201);
-    expect(courses.body.students[0]).toStrictEqual(
-      { id: 1, name: 'Alice', email: 'alice@example.com' }
-    );
+    expect(courses.body.students[0]).toStrictEqual({
+      id: 1,
+      name: "Alice",
+      email: "alice@example.com",
+    });
   });
-  
+
   test("DELETE /:courseId/students/:studentId should delete a student from a course", async () => {
-    
     await request(app).post("/courses/1/students/1");
     const res = await request(app).delete("/courses/1/students/1");
     const courses = await request(app).get("/courses/1");
-    
+
     expect(res.statusCode).toBe(204);
     expect(courses.body.students).toStrictEqual([]);
   });

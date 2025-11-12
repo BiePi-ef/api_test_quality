@@ -11,15 +11,12 @@ const swaggerDefinition = require("../swaggerDef");
 
 const options = {
   swaggerDefinition,
-  apis: [
-    "./src/controllers/*.js",
-    "./src/routes/*.js"
-  ], // Chemin vers les fichiers avec les commentaires JSDoc
+  apis: ["./src/controllers/*.js", "./src/routes/*.js"], // Chemin vers les fichiers avec les commentaires JSDoc
 };
 
 const swaggerSpec = swaggerJSDoc(options);
 // Serve generated spec from JSDoc comments in controllers (preferred)
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // If you still want to serve a static swagger.json as a fallback, you can
 // uncomment the line below and ensure the file exists at project root.
