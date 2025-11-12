@@ -3,8 +3,6 @@ const swaggerUi = require("swagger-ui-express");
 
 const x = require("./routes/students");
 const y = require("./routes/courses");
-
-const z = require("../swagger.json");
 const app = express();
 app.use(express.json());
 
@@ -17,9 +15,13 @@ const options = {
 };
 
 const swaggerSpec = swaggerJSDoc(options);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(z));
+// Serve generated spec from JSDoc comments in controllers (preferred)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// If you still want to serve a static swagger.json as a fallback, you can
+// uncomment the line below and ensure the file exists at project root.
+// const staticSpec = require('../swagger.json');
+// app.use('/api-docs-static', swaggerUi.serve, swaggerUi.setup(staticSpec));
 
 const storage = require("./services/storage");
 
